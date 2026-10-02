@@ -1,7 +1,7 @@
 const CONFIG=window.PORTFOLIO_CONFIG||{};
 const grid=document.getElementById('home-grid'),statusEl=document.getElementById('home-status');
 const escapeHtml=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
-const driveThumb=id=>`https://drive.google.com/thumbnail?id=${encodeURIComponent(id)}&sz=w1600`;
+const driveThumb=item=>item?.thumbnailLink||`https://drive.google.com/thumbnail?id=${encodeURIComponent(item?.id||'')}&sz=w1600`;
 const label=k=>k==='video'?'Video Editing':k==='graphics'?'Graphics & Branding':'Performance Marketing';
 function renderServiceThumbs(data){
  const categories=['video','graphics','performance'];
@@ -12,7 +12,7 @@ function renderServiceThumbs(data){
   const items=(cat?.sections||[]).flatMap(s=>s.items||[]).sort((a,b)=>new Date(b.modifiedTime)-new Date(a.modifiedTime));
   const item=items[0];
   if(!item)return;
-  host.src=driveThumb(item.id);
+  host.src=driveThumb(item);
   host.alt=item.title||item.name||`${label(key)} work`;
   host.onerror=()=>{host.classList.add('broken');};
  });
@@ -20,7 +20,7 @@ function renderServiceThumbs(data){
 function render(items){
  if(!items.length){statusEl.textContent='Add work to your Drive folders to see it here.';return}
  statusEl.textContent=`Showing ${Math.min(items.length,9)} recent projects`;
- grid.innerHTML=items.slice(0,9).map(p=>{const v=p.mimeType?.startsWith('video/');const t=driveThumb(p.id);const page=p.category==='video'?'video.html':p.category==='graphics'?'graphics.html':'performance.html';
+ grid.innerHTML=items.slice(0,9).map(p=>{const v=p.mimeType?.startsWith('video/');const t=driveThumb(p);const page=p.category==='video'?'video.html':p.category==='graphics'?'graphics.html':'performance.html';
  return `<a class="preview-card tilt-card" href="${page}"><div class="media-wrap"><img loading="lazy" decoding="async" src="${t}" alt="${escapeHtml(p.title||p.name)}" onerror="this.classList.add('broken');this.parentElement.classList.add('no-image')">${v?'<span class="play">▶</span>':''}<span class="card-category">${label(p.category)}</span></div><div class="card-info"><h3>${escapeHtml(p.title||p.name||'Project')}</h3><span>${escapeHtml(p.section||'Work')} ↗</span></div></a>`}).join('');
  initTilts();
 }
