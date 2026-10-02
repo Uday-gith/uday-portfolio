@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Uday Dongre — Video Editing, Graphics & Branding, and Performance Marketing portfolio." />
+  <title>Uday Dongre — Creative Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="fish-canvas" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html">UDAY<span>.</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-kicker">VIDEO · DESIGN · PERFORMANCE</div>
+      <h1>Creative work<br>with <em>purpose.</em></h1>
+      <p class="hero-copy">I edit videos, build visual identities and create performance-driven content for brands, creators and businesses.</p>
+      <a class="button" href="#work">Explore work <span>↗</span></a>
+      <div class="hero-meta"><span>Based in India</span><span>Available for selected projects</span></div>
+    </section>
+
+    <section class="work-section" id="work">
+      <div class="section-heading">
+        <div><span class="eyebrow">SELECTED WORK</span><h2>Three ways I create.</h2></div>
+      </div>
+      <div class="service-grid">
+        <a class="service-card tilt-card" href="video.html">
+          <div class="service-number">01</div><div class="service-art art-video"><span>PLAY</span></div>
+          <div class="service-copy"><h3>Video Editing</h3><p>Reels, podcasts, ads, storytelling, motion and social-first edits.</p><span>View portfolio ↗</span></div>
+        </a>
+        <a class="service-card tilt-card" href="graphics.html">
+          <div class="service-number">02</div><div class="service-art art-graphics"><span>FORM</span></div>
+          <div class="service-copy"><h3>Graphics & Branding</h3><p>Campaign creatives, thumbnails, social design and visual identities.</p><span>View portfolio ↗</span></div>
+        </a>
+        <a class="service-card tilt-card" href="performance.html">
+          <div class="service-number">03</div><div class="service-art art-performance"><span>GROW</span></div>
+          <div class="service-copy"><h3>Performance Marketing</h3><p>Campaign creative, paid social, growth experiments and reporting.</p><span>View portfolio ↗</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="preview-section">
+      <div class="section-heading"><div><span class="eyebrow">LATEST WORK</span><h2>Fresh from the folders.</h2></div></div>
+      <div id="home-status" class="status">Loading latest work…</div>
+      <div id="home-grid" class="preview-grid"></div>
+    </section>
+
+    <section class="about" id="about">
+      <span class="eyebrow">ABOUT</span>
+      <div class="about-grid">
+        <h2>I turn ideas into things people can see, watch and act on.</h2>
+        <div><p>I’m Uday, a visual designer, video editor and digital creative. My work sits between storytelling and business: making content look sharp while keeping the message clear.</p><p>From short-form video and podcast content to social campaigns, branding and performance creatives, I build work designed for real audiences.</p><div class="skills"><span>Video Editing</span><span>Motion Graphics</span><span>Graphic Design</span><span>Branding</span><span>Performance Marketing</span><span>Social Content</span></div></div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <span class="eyebrow">CONTACT</span><h2>Let’s make<br>something useful.</h2><p>For collaborations, editing, design or marketing projects.</p>
+      <a class="contact-link" href="mailto:YOUR_EMAIL@example.com">YOUR_EMAIL@example.com ↗</a>
+      <div class="socials"><a href="https://instagram.com/_the.uday_" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></div>
+    </section>
+  </main>
+  <footer><span>© <span id="year"></span> Uday Dongre</span><span>Built for visual work.</span></footer>
+
+  <div id="modal" class="modal" aria-hidden="true"><button class="modal-close" aria-label="Close">×</button><div class="modal-content" id="modal-content"></div></div>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="config.js"></script><script src="app.js"></script>
+</body>
+</html>
