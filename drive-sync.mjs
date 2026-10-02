@@ -22,6 +22,31 @@ async function drive(url){
   if(!r.ok) throw new Error(`Drive API ${r.status}: ${await r.text()}`);
   return r.json();
 }
+
+async function cacheThumbnail(file){
+  if(!file.thumbnailLink) return null;
+  try{
+    const r=await fetch(file.thumbnailLink);
+    if(!r.ok) return null;
+    const buffer=Buffer.from(await r.arrayBuffer());
+    if(!buffer.length) return null;
+    const dir='assets/thumbs';
+    fs.mkdirSync(dir,{recursive:true});
+    const path=dir+'/'+file.id+'.jpg';
+    fs.writeFileSync(path,buffer);
+    return path;
+  }catch(e){
+    console.warn('Thumbnail cache failed for '+file.name+': '+e.message);
+    return null;
+  }
+}
+async function enrichFiles(files){
+  return Promise.all(files.map(async file=>{
+    const localThumbnail=await cacheThumbnail(file);
+    return {...file,localThumbnail};
+  }));
+}
+
 async function children(folderId){
   const q=encodeURIComponent(`'${folderId}' in parents and trashed = false`);
   const fields=encodeURIComponent('nextPageToken,files(id,name,mimeType,webViewLink,thumbnailLink,modifiedTime,size,description)');
@@ -40,9 +65,9 @@ async function buildCategory(key,rootId){
   const sections=[];
   for(const folder of subfolders){
     const files=(await children(folder.id)).filter(x=>x.mimeType!=='application/vnd.google-apps.folder' && TYPES.has(x.mimeType));
-    sections.push({id:folder.id,title:folder.name,items:files.map(file=>({...file,title:cleanName(file.name),category:key,section:folder.name}))});
+    const enriched=await enrichFiles(files); sections.push({id:folder.id,title:folder.name,items:enriched.map(file=>({...file,title:cleanName(file.name),category:key,section:folder.name}))});
   }
-  if(direct.length) sections.push({id:`${rootId}-uncategorized`,title:'More Work',items:direct.map(file=>({...file,title:cleanName(file.name),category:key,section:'More Work'}))});
+  if(direct.length){ const enriched=await enrichFiles(direct); sections.push({id:`${rootId}-uncategorized`,title:'More Work',items:enriched.map(file=>({...file,title:cleanName(file.name),category:key,section:'More Work'}))}); }
   sections.sort((a,b)=>a.title.localeCompare(b.title));
   return {key,sections};
 }
