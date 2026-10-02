@@ -1,7 +1,7 @@
 const CONFIG=window.PORTFOLIO_CONFIG||{};
 const grid=document.getElementById('home-grid'),statusEl=document.getElementById('home-status');
 const escapeHtml=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
-const driveThumb=item=>item?.thumbnailLink||`https://drive.google.com/thumbnail?id=${encodeURIComponent(item?.id||'')}&sz=w1600`;
+const driveThumb=item=>item?.localThumbnail||item?.thumbnailLink||`https://drive.google.com/thumbnail?id=${encodeURIComponent(item?.id||'')}&sz=w1600`;
 const label=k=>k==='video'?'Video Editing':k==='graphics'?'Graphics & Branding':'Performance Marketing';
 function renderServiceThumbs(data){
  const categories=['video','graphics','performance'];
