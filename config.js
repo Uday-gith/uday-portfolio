@@ -1,13 +1,9 @@
 window.PORTFOLIO_CONFIG = {
-  googleDriveApiKey: 'PASTE_YOUR_GOOGLE_DRIVE_API_KEY',
+  googleDriveApiKey: 'AIzaSyA_4DUCY-Hv5xsbLXFdMH7LwPMejrl-edk',
+
   folders: {
-    video: 'PASTE_VIDEO_FOLDER_ID',
-    graphics: 'PASTE_GRAPHICS_FOLDER_ID',
-    performance: 'PASTE_PERFORMANCE_MARKETING_FOLDER_ID'
-  },
-  showFileTypes: [
-    'image/jpeg','image/png','image/webp','image/gif','image/avif',
-    'video/mp4','video/webm','video/quicktime'
-  ],
-  maxPreviewItems: 6
+    video: '1ZjUboAvM9BHbFfJdNSPkzf7bJrOZac1Z',
+    graphics: '1pNLYueU7sUynhoiQ3uJ0iyqpQ4qLuDPG',
+    performance: '1gQZxwdtMq20GtAG5jdGPDNfVndotW9yS'
+  }
 };
