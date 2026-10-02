@@ -1,6 +1,8 @@
 name: Sync portfolio from Google Drive
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
   schedule:
     - cron: '*/15 * * * *'
