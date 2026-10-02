@@ -1,41 +1,84 @@
-# Uday Dongre — Free Creative Portfolio
+# Uday Dongre Portfolio — Free GitHub Pages Version
 
-A zero-cost portfolio using GitHub Pages + Google Drive API.
+This version keeps the site free and removes the Google Drive API key from browser code.
 
-## Pages
-- `index.html` — homepage with three service previews, latest work, intro and contact.
-- `video.html` — Video Editing portfolio.
-- `graphics.html` — Graphics & Branding portfolio.
-- `performance.html` — Performance Marketing portfolio.
+## Architecture
 
-## Drive folders
-Create one parent folder and three subfolders:
+- GitHub Pages: hosting
+- Google Drive: portfolio source folders
+- GitHub Actions: syncs Drive files into `portfolio.json` every 15 minutes
+- GitHub Actions secrets: stores the Drive API key privately
+- Google Sheets + Google Form: optional public testimonials feed
+- Three.js: lightweight 3D rocket background
+
+## Drive structure
+
+Create:
 
 ```text
 Portfolio/
 ├── Video Editing/
+│   ├── Performance Ads & Paid Media/
+│   ├── AI-Powered UGC & E-commerce Creatives/
+│   ├── Documentary-Style Edits/
+│   ├── Podcast and Repurposed Long-Form/
+│   ├── UI/SaaS Animation/
+│   ├── YouTube Long-Form Editing/
+│   └── Performance Ad Editing/
 ├── Graphics & Branding/
+│   ├── Logo & Visual Identity/
+│   ├── Brand Strategy & Identity Systems/
+│   ├── Social Media Branding/
+│   ├── Campaign & Event Branding/
+│   ├── Creator & Personal Branding/
+│   ├── Packaging & Print/
+│   └── Rebrands & Identity Refresh/
 └── Performance Marketing/
+    └── Create any niche folders you want; the site will detect them automatically.
 ```
 
-Upload your files to the relevant folder. The website reads those folders and updates automatically when the page is loaded.
+Each project can be a file inside its niche folder. The portfolio page shows the first 3 projects and reveals the rest with **See more**.
 
-## Setup
-1. Create a Google Cloud project.
-2. Enable the Google Drive API.
-3. Create an API key and restrict it to the Google Drive API if possible.
-4. Make each portfolio folder accessible for link viewing as appropriate for your content.
-5. Copy the three folder IDs from their Drive URLs into `config.js`.
-6. Paste your API key into `config.js`.
-7. Replace `YOUR_EMAIL@example.com` in `index.html` with your email.
-8. Upload the repository to GitHub and enable GitHub Pages.
+## GitHub Actions secrets
 
-## 3D background
-The homepage uses Three.js from jsDelivr and procedurally builds a lightweight fish rather than downloading a large model. This keeps the site free and reduces asset weight. On reduced-motion settings, the fish becomes static.
+Repository → Settings → Secrets and variables → Actions → New repository secret.
 
-## Performance
-- Three.js pixel ratio is capped at 1.5.
-- The fish is deliberately low-poly and translucent.
-- Portfolio images lazy-load.
-- 3D card tilt is disabled when reduced motion is requested.
-- The visual 3D effects are progressive enhancement; the portfolio remains usable without WebGL.
+Create:
+
+- `GOOGLE_DRIVE_API_KEY`
+- `VIDEO_FOLDER_ID`
+- `GRAPHICS_FOLDER_ID`
+- `PERFORMANCE_FOLDER_ID`
+
+The API key must NOT be placed in `config.js`.
+
+The folder IDs are already known:
+
+- Video: `1ZjUboAvM9BHbFfJdNSPkzf7bJrOZac1Z`
+- Graphics: `1pNLYueU7sUynhoiQ3uJ0iyqpQ4qLuDPG`
+- Performance: `1gQZxwdtMq20GtAG5jdGPDNfVndotW9yS`
+
+## API key restrictions
+
+Restrict the key to:
+
+- Application restriction: your GitHub Pages website/referrer if Google Cloud accepts the configuration you use
+- API restriction: Google Drive API
+
+The key is only consumed by the GitHub Actions runner, not by the public website.
+
+## Testimonials
+
+Create a Google Form with fields such as:
+
+- Name
+- Role / Company
+- Testimonial
+
+Link the responses to Google Sheets. Publish the response sheet as CSV, then put the published CSV URL into `config.js` as `testimonialsCsvUrl` and the form URL into `testimonialFormUrl`.
+
+The homepage duplicates the testimonial cards into a continuous left-to-right marquee. Hovering pauses it.
+
+## Cinematic service images
+
+The three service cards use cinematic image backgrounds. Replace the image URLs in `style.css` with your own work or generated images later if you want the site to be fully self-owned.
